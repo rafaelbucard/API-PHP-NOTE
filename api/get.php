@@ -9,11 +9,11 @@ if($id){
  $sql->execute();
 
  if($sql->rowCount() > 0){
-     $data = $sql->fetchAll(PDO::FETCH_ASSOC);
+     $data = $sql->fetch(PDO::FETCH_ASSOC);
 
      $array['result'][] = [
-         'id' => $item ['id'],
-         'title' => $item ['title'],
+         'id' => $data ['id'],
+         'title' => $data ['title'],
          'body' => $data['body']
      ];
 
