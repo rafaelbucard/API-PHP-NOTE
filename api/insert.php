@@ -1,9 +1,9 @@
 <?php
 require('../config.php');
 
-$methot = strtolower($_SERVER['REQUEST_METHOD']);
+$method = strtolower($_SERVER['REQUEST_METHOD']);
 
-if($methot === 'post'){
+if($method === 'post'){
 
     $title = filter_input(INPUT_POST,'title');
     $body = filter_input(INPUT_POST,'body');

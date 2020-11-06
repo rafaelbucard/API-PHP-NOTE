@@ -1,23 +1,27 @@
 <?php
 require('../config.php');
 
-$methot = strtolower($_SERVER['REQUEST_METHOD']);
+$id = filter_input(INPUT_GET, 'id');
 
-if($methot === 'get'){
- $sql = $pdo->query("SELECT * FROM notes");
+if($id){
+ $sql = $pdo->prepare("SELECT * FROM notes WHERE id = :id");
+ $sql->bindValue(':id',$id);
+ $sql->execute();
+
  if($sql->rowCount() > 0){
-     $data = $sql->fetchAll(PDO::FETCH_ASSOC);
+     $data = $sql->fetch(PDO::FETCH_ASSOC);
 
-     foreach($data as $item) {
-         $array['result'][] = [
-            'id' => $item ['id'],
-            'title' => $item ['title']
+     $array['result'][] = [
+         'id' => $data ['id'],
+         'title' => $data ['title'],
+         'body' => $data['body']
+     ];
 
-         ];
+     } else {
+        $array['error'] = 'ID inexistente';
      }
- }
+ }  else {
+    $array['error'] = 'ID não enviado';
+ } 
 
-} else {
-    $array['error'] = 'METODO PERMITIDO APENAS GET';
-}
  require('../return.php');
